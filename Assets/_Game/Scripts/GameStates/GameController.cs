@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [field: SerializeField]
+    public Unit PlayerUnitPrefab {  get; private set; }
+    [field: SerializeField]
+    public Transform PlayerUnitSpawnLocation { get; private set;}
+    [field: SerializeField]
+    public UnitSpawner UnitSpawner { get; private set; }
 }
