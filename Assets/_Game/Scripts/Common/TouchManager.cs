@@ -15,6 +15,8 @@ public class TouchManager : MonoBehaviour
 
     public UnityEvent OnTap;
 
+    public bool IsTapPressed { get; private set; }
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -30,6 +32,7 @@ public class TouchManager : MonoBehaviour
     private void OnDisable()
     {
         touchPressAction.performed -= TouchPressed;
+        IsTapPressed = false;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
@@ -37,6 +40,7 @@ public class TouchManager : MonoBehaviour
         Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
         position.z = player.transform.position.z;
         player.transform.position = position;
+        IsTapPressed = true;
     }
 
     public void Tap()
