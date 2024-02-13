@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class TouchManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class TouchManager : MonoBehaviour
 
     private InputAction touchPositionAction;
     private InputAction touchPressAction;
+
+    public UnityEvent OnTap;
 
     private void Awake()
     {
@@ -34,5 +37,11 @@ public class TouchManager : MonoBehaviour
         Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
         position.z = player.transform.position.z;
         player.transform.position = position;
+    }
+
+    public void Tap()
+    {
+        OnTap?.Invoke();
+
     }
 }

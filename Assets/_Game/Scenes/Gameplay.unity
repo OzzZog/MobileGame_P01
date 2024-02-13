@@ -648,6 +648,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 793794370}
+  OnTap:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2095662521
 MonoBehaviour:
   m_ObjectHideFlags: 0
