@@ -39,10 +39,12 @@ public class GamePlayState : State
         if(_controller.Input.IsTapPressed == true)
         {
             Debug.Log("You Win!");
+            _stateMachine.ChangeState(_stateMachine.WinState);
         }
         else if(StateDuration >= _controller.TapLimitDuration)
         {
             Debug.Log("You Lose!");
+            _stateMachine.ChangeState(_stateMachine.LoseState);
         }
 
     }
