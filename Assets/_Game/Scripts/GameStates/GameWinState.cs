@@ -19,7 +19,7 @@ public class GameWinState : State
 
 
         // Play win audio, hide gameplay UI, show win UI
-        AudioManager.PlayClip(_controller.Clip[0], 1);
+        AudioManager.PlayClip(_controller.Clip[1], 1);
         GamePlayUI.HideUI(_controller.GamePlayUI[1]);
         GamePlayUI.ShowUI(_controller.GamePlayUI[2]);
     }

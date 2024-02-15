@@ -6,7 +6,6 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     //float elapsedTime;
-
     // Update is called once per frame
     void Update()
     {

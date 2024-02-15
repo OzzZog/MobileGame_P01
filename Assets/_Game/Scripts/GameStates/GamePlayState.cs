@@ -23,6 +23,7 @@ public class GamePlayState : State
         Debug.Log("Listen for Player Inputs");
         GamePlayUI.HideUI(_controller.GamePlayUI[0]);
         GamePlayUI.ShowUI(_controller.GamePlayUI[1]);
+        AudioManager.PlayClip(_controller.Clip[0], 1);
     }
 
     public override void Exit()
@@ -44,7 +45,7 @@ public class GamePlayState : State
         if(_controller.Input.IsTapPressed == true)
         {
             //_controller.Input._numberOfTaps.ToString();
-            Debug.Log(_controller.Input._numberOfTaps.ToString());
+            Debug.Log("Number of Taps: " + _controller.Input._numberOfTaps.ToString());
         }
         if(_controller.Input._numberOfTaps == 10)
         {

@@ -20,7 +20,7 @@ public class GameLoseState : State
 
 
         // Play lose audio, hide gameplay UI, show lose UI
-        AudioManager.PlayClip(_controller.Clip[1], 1);
+        AudioManager.PlayClip(_controller.Clip[2], 1);
         GamePlayUI.HideUI(_controller.GamePlayUI[1]);
         GamePlayUI.ShowUI(_controller.GamePlayUI[3]);
     }
