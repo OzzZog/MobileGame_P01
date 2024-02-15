@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using TMPro;
 
 public class GamePlayState : State
 {
@@ -17,9 +20,9 @@ public class GamePlayState : State
     {
         base.Enter();
 
-        Debug.Log("STATE: Game Play");
         Debug.Log("Listen for Player Inputs");
-        Debug.Log("Display Player HUD");
+        GamePlayUI.HideUI(_controller.GamePlayUI[0]);
+        GamePlayUI.ShowUI(_controller.GamePlayUI[1]);
     }
 
     public override void Exit()
@@ -36,16 +39,20 @@ public class GamePlayState : State
     {
         base.Tick();
 
+        _controller.Timer.CountDown(_controller.TapLimitDuration, _controller.TimerText);
+
         if(_controller.Input.IsTapPressed == true)
         {
-            Debug.Log("You Win!");
+            //_controller.Input._numberOfTaps.ToString();
+            Debug.Log(_controller.Input._numberOfTaps.ToString());
+        }
+        if(_controller.Input._numberOfTaps == 10)
+        {
             _stateMachine.ChangeState(_stateMachine.WinState);
         }
         else if(StateDuration >= _controller.TapLimitDuration)
         {
-            Debug.Log("You Lose!");
             _stateMachine.ChangeState(_stateMachine.LoseState);
         }
-
     }
 }

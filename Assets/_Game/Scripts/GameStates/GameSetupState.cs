@@ -19,11 +19,7 @@ public class GameSetupState : State
     {
         base.Enter();
 
-        Debug.Log("STATE: Game Setup");
-        Debug.Log("Load Save Data");
-        Debug.Log("Spawn Units");
-
-        _controller.UnitSpawner.Spawn(_controller.PlayerUnitPrefab, _controller.PlayerUnitSpawnLocation);
+        GamePlayUI.ShowUI(_controller.GamePlayUI[0]);
     }
 
     public override void Exit()
@@ -39,6 +35,12 @@ public class GameSetupState : State
     public override void Tick()
     {
         base.Tick();
-        _stateMachine.ChangeState(_stateMachine.PlayState);
+
+        if (StateDuration >= _controller.TapLimitDuration)
+        {
+            _stateMachine.ChangeState(_stateMachine.PlayState);
+        }
+
+        
     }
 }

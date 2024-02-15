@@ -6,8 +6,6 @@ using UnityEngine.Events;
 
 public class TouchManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
     private PlayerInput playerInput;
 
     private InputAction touchPositionAction;
@@ -16,6 +14,7 @@ public class TouchManager : MonoBehaviour
     public UnityEvent OnTap;
 
     public bool IsTapPressed { get; private set; }
+    public int _numberOfTaps {  get; private set; }
 
     private void Awake()
     {
@@ -37,10 +36,9 @@ public class TouchManager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
-        position.z = player.transform.position.z;
-        player.transform.position = position;
         IsTapPressed = true;
+        _numberOfTaps++;
+        //Debug.Log("Number of Taps: " + _numberOfTaps);
     }
 
     public void Tap()
