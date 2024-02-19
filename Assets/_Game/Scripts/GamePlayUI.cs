@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GamePlayUI : MonoBehaviour
 {
@@ -16,4 +17,14 @@ public class GamePlayUI : MonoBehaviour
         return _setupUI;
     }
     // 0 = SetupUI, 1 = GamePlayUI, 2 = WinUI, 3 = LoseUI
+
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

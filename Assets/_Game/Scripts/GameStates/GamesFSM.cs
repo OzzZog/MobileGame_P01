@@ -27,4 +27,9 @@ public class GamesFSM : StateMachineMB
     {
         ChangeState(SetupState);
     }
+
+    public void EnterPlayState()
+    {
+        ChangeState(PlayState);
+    }
 }

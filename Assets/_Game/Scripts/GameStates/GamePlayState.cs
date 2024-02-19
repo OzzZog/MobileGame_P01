@@ -24,11 +24,19 @@ public class GamePlayState : State
         GamePlayUI.HideUI(_controller.GamePlayUI[0]);
         GamePlayUI.ShowUI(_controller.GamePlayUI[1]);
         AudioManager.PlayClip(_controller.Clip[0], 1);
+
+        _controller.ResetTapCounter();
+        _controller.SetTimerCountDown();
+
+        _controller.ResetSlider();
+        _controller.SetSlider();
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        _controller.ResetTapCounter();
     }
 
     public override void FixedTick()
@@ -40,14 +48,11 @@ public class GamePlayState : State
     {
         base.Tick();
 
-        _controller.Timer.CountDown(_controller.TapLimitDuration, _controller.TimerText);
+        _controller.CountDown();
 
-        if(_controller.Input.IsTapPressed == true)
-        {
-            //_controller.Input._numberOfTaps.ToString();
-            Debug.Log("Number of Taps: " + _controller.Input._numberOfTaps.ToString());
-        }
-        if(_controller.Input._numberOfTaps == 10)
+        Debug.Log("Number of Taps: " + _controller.AmountOfTapsFromPlayer);
+
+        if(_controller.AmountOfTapsFromPlayer == 15)
         {
             _stateMachine.ChangeState(_stateMachine.WinState);
         }

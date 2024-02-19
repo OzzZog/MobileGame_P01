@@ -36,11 +36,11 @@ public class GameSetupState : State
     {
         base.Tick();
 
+        /*
         if (StateDuration >= _controller.TapLimitDuration)
         {
             _stateMachine.ChangeState(_stateMachine.PlayState);
         }
-
-        
+        */
     }
 }

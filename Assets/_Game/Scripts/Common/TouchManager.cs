@@ -14,7 +14,6 @@ public class TouchManager : MonoBehaviour
     public UnityEvent OnTap;
 
     public bool IsTapPressed { get; private set; }
-    public int _numberOfTaps {  get; private set; }
 
     private void Awake()
     {
@@ -37,13 +36,6 @@ public class TouchManager : MonoBehaviour
     private void TouchPressed(InputAction.CallbackContext context)
     {
         IsTapPressed = true;
-        _numberOfTaps++;
-        //Debug.Log("Number of Taps: " + _numberOfTaps);
-    }
-
-    public void Tap()
-    {
         OnTap?.Invoke();
-
     }
 }
