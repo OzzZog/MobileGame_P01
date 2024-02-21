@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4913576590827582060}
   - component: {fileID: 4913576590827582067}
   m_Layer: 0
-  m_Name: BreakableObject
+  m_Name: AnvilObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517d88384407bd144b5301067c7942dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tapsNeededToBreak: 10
-  _sprite: {fileID: 0}
+  _tapsNeededToBreak: 20
+  _timeToBreakThisObject: 5
 --- !u!1 &4913576591437717502
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6226415, g: 0.31423497, b: 0.09789957, a: 1}
+  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

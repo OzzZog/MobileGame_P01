@@ -5,7 +5,8 @@ using UnityEngine;
 public class BreakableObject : MonoBehaviour
 {
     [Header("Object Details")]
-    [SerializeField] private int _tapsNeededToBreak;
+    [SerializeField] public int _tapsNeededToBreak;
+    [SerializeField] public int _timeToBreakThisObject;
 
     // Start is called before the first frame update
     void Start()

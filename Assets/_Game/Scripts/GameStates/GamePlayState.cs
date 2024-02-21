@@ -4,11 +4,14 @@ using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using TMPro;
+using UnityEditor;
+using Unity.VisualScripting;
 
 public class GamePlayState : State
 {
     private GamesFSM _stateMachine;
     private GameController _controller;
+    private BreakableObject _breakableObject;
 
     public GamePlayState(GamesFSM stateMachine, GameController controller)
     {
@@ -20,23 +23,26 @@ public class GamePlayState : State
     {
         base.Enter();
 
-        Debug.Log("Listen for Player Inputs");
-        GamePlayUI.HideUI(_controller.GamePlayUI[0]);
         GamePlayUI.ShowUI(_controller.GamePlayUI[1]);
         AudioManager.PlayClip(_controller.Clip[0], 1);
 
-        _controller.ResetTapCounter();
-        _controller.SetTimerCountDown();
+        _controller.ResetGameInfo();
+        _controller.SetGameValues();
 
-        _controller.ResetSlider();
-        _controller.SetSlider();
+        _breakableObject = _controller.ObjectSpawner.Spawn(_controller.BreakableObject[_controller.CurrentObjectInArray], _controller.BreakableObjectTransform);
     }
 
     public override void Exit()
     {
         base.Exit();
 
-        _controller.ResetTapCounter();
+        _controller.ResetGameInfo();
+
+        _controller.IncreaseDifficulty();
+
+        _breakableObject.gameObject.SetActive(false);
+
+        GamePlayUI.HideUI(_controller.GamePlayUI[1]);
     }
 
     public override void FixedTick()
@@ -50,13 +56,16 @@ public class GamePlayState : State
 
         _controller.CountDown();
 
-        Debug.Log("Number of Taps: " + _controller.AmountOfTapsFromPlayer);
-
-        if(_controller.AmountOfTapsFromPlayer == 15)
+        //Debug.Log("Number of Taps: " + _controller.AmountOfTapsFromPlayer);
+        if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[2]._tapsNeededToBreak)
         {
             _stateMachine.ChangeState(_stateMachine.WinState);
         }
-        else if(StateDuration >= _controller.TapLimitDuration)
+        else if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[_controller.CurrentObjectInArray]._tapsNeededToBreak)
+        {
+            _stateMachine.ChangeState(_stateMachine.NextLevelState);
+        }
+        else if(StateDuration >= _controller.BreakableObject[_controller.CurrentObjectInArray]._timeToBreakThisObject)
         {
             _stateMachine.ChangeState(_stateMachine.LoseState);
         }

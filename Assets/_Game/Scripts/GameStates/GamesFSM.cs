@@ -10,8 +10,10 @@ public class GamesFSM : StateMachineMB
     // state variables here
     public GameSetupState SetupState {  get; private set; }
     public GamePlayState PlayState { get; private set; }
+    public GameNextLevelState NextLevelState { get; private set; }
     public GameWinState WinState { get; private set; }
     public GameLoseState LoseState { get; private set; }
+
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class GamesFSM : StateMachineMB
         // state instantiation here
         SetupState = new GameSetupState(this, _controller);
         PlayState = new GamePlayState(this, _controller);
+        NextLevelState = new GameNextLevelState(this, _controller);
         WinState = new GameWinState(this, _controller);
         LoseState = new GameLoseState(this, _controller);
     }
@@ -31,5 +34,10 @@ public class GamesFSM : StateMachineMB
     public void EnterPlayState()
     {
         ChangeState(PlayState);
+    }
+
+    public void ReEnterPlayState()
+    {
+        ChangeStateToPrevious();
     }
 }

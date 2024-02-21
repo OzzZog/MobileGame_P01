@@ -1,33 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
-public class GameLoseState : State
+public class GameNextLevelState : State
 {
     private GamesFSM _stateMachine;
     private GameController _controller;
 
-    public GameLoseState(GamesFSM stateMachine, GameController controller)
+    public GameNextLevelState(GamesFSM stateMachine, GameController controller)
     {
         _stateMachine = stateMachine;
         _controller = controller;
     }
-
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("You Lose!");
 
-
-        // Play lose audio, hide gameplay UI, show lose UI
-        AudioManager.PlayClip(_controller.Clip[2], 1);
-        GamePlayUI.HideUI(_controller.GamePlayUI[1]);
-        GamePlayUI.ShowUI(_controller.GamePlayUI[4]);
+        GamePlayUI.ShowUI(_controller.GamePlayUI[2]);
+        AudioManager.PlayClip(_controller.Clip[0], 1);
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        GamePlayUI.HideUI(_controller.GamePlayUI[2]);
     }
 
     public override void FixedTick()
