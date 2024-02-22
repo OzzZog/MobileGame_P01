@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
         _tapsToBreakObject.maxValue = _breakableObject[_currentObjectInArray]._tapsNeededToBreak;
         _tapsToBreakObject.minValue = 0;
 
-        Debug.Log(_currentObjectInArray);
+        //Debug.Log(_currentObjectInArray);
         //Debug.Log("Taps to break this object: " + _breakableObject[_currentObjectInArray]._tapsNeededToBreak);
         //Debug.Log("Taps to break this object: " + _breakableObject[_currentObjectInArray]._timeToBreakThisObject);
     }
@@ -68,19 +68,23 @@ public class GameController : MonoBehaviour
 
     public void CountDown()
     {
-        if (_timerCountDown > 0)
+        _timerCountDown -= Time.deltaTime;
+        if (_timerCountDown > 3)
         {
-            _timerCountDown -= Time.deltaTime;
+            _timerText.color = Color.white;
+        }
+        else if (_timerCountDown < 3)
+        {
+            _timerText.color = Color.red;
         }
         else if (_timerCountDown <= 0)
         {
             _timerCountDown = 0;
 
-            _timerText.color = Color.red;
+            //_timerText.color = Color.red;
         }
 
-        int minuets = Mathf.FloorToInt(_timerCountDown / 60);
-        int seconds = Mathf.FloorToInt(_timerCountDown % 60);
-        _timerText.text = string.Format("{0:00}:{1:00}", minuets, seconds);
+        float seconds = _timerCountDown % 60;
+        _timerText.text = string.Format("{0:N}", seconds);
     }
 }

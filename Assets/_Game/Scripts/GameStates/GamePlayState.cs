@@ -57,7 +57,7 @@ public class GamePlayState : State
         _controller.CountDown();
 
         //Debug.Log("Number of Taps: " + _controller.AmountOfTapsFromPlayer);
-        if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[2]._tapsNeededToBreak)
+        if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[4]._tapsNeededToBreak)
         {
             _stateMachine.ChangeState(_stateMachine.WinState);
         }
