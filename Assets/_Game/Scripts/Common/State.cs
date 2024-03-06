@@ -9,7 +9,7 @@ public abstract class State
     // run once when state is Entered
     public virtual void Enter()
     {
-        StateDuration = 0;
+        StateDuration = -4f;
     }
 
     // run once when state is Exited

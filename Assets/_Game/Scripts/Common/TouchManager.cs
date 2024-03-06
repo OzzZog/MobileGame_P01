@@ -14,8 +14,6 @@ public class TouchManager : MonoBehaviour
     public UnityEvent OnTap;
     public UnityEvent TapDuringGameplay;
 
-    [SerializeField] ParticleSystem particle = null;
-
     public bool AreWeInGamePlayState;
 
     public bool IsTapPressed { get; private set; }

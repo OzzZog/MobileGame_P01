@@ -28,7 +28,6 @@ public class GamePlayState : State
 
         _controller.ResetGameInfo();
         _controller.SetGameValues();
-        _controller.Input.AreWeInGamePlayState = true;
 
         _breakableObject = _controller.ObjectSpawner.Spawn(_controller.BreakableObject[_controller.CurrentObjectInArray], _controller.BreakableObjectTransform);
     }
@@ -40,6 +39,7 @@ public class GamePlayState : State
         _controller.ResetGameInfo();
         _controller.IncreaseDifficulty();
 
+        //Object.Destroy(_breakableObject);
         _breakableObject.gameObject.SetActive(false);
 
         GamePlayUI.HideUI(_controller.GamePlayUI[1]);
@@ -56,20 +56,29 @@ public class GamePlayState : State
     {
         base.Tick();
 
-        _controller.CountDown();
+        if (!_controller.StartGameAfterCountdown)
+        {
+            _controller.StartingCountdown();
+        }
 
-        //Debug.Log("Number of Taps: " + _controller.AmountOfTapsFromPlayer);
-        if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[4]._tapsNeededToBreak)
+        else if (_controller.StartGameAfterCountdown)
         {
-            _stateMachine.ChangeState(_stateMachine.WinState);
-        }
-        else if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[_controller.CurrentObjectInArray]._tapsNeededToBreak)
-        {
-            _stateMachine.ChangeState(_stateMachine.NextLevelState);
-        }
-        else if(StateDuration >= _controller.BreakableObject[_controller.CurrentObjectInArray]._timeToBreakThisObject)
-        {
-            _stateMachine.ChangeState(_stateMachine.LoseState);
+            _controller.Input.AreWeInGamePlayState = true;
+
+            _controller.CountDown();
+
+            if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[4]._tapsNeededToBreak)
+            {
+                _stateMachine.ChangeState(_stateMachine.WinState);
+            }
+            else if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[_controller.CurrentObjectInArray]._tapsNeededToBreak)
+            {
+                _stateMachine.ChangeState(_stateMachine.NextLevelState);
+            }
+            else if (StateDuration >= _controller.BreakableObject[_controller.CurrentObjectInArray]._timeToBreakThisObject)
+            {
+                _stateMachine.ChangeState(_stateMachine.LoseState);
+            }
         }
     }
 }

@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     [Header("Game Data")]
-    private float _timerCountDown;
-    private int _amountOfTapsFromPlayer;
-    private int _currentObjectInArray;
+    [SerializeField] private float _timerCountDown;
+    [SerializeField] private int _amountOfTapsFromPlayer;
+    [SerializeField] private int _currentObjectInArray;
     public Gradient gradient;
+    [SerializeField] private bool _startGameAfterCountdown = false;
+    [SerializeField] private float _initialCountdown = 4f;
 
     [Header("Dependencies")]
     [SerializeField] private AudioClip[] _clip;
@@ -19,20 +21,20 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _tapsToBreakObject;
     [SerializeField] private Image _sliderFill;
+    [SerializeField] private TextMeshProUGUI _initialCountdownText;
 
     [Header("Breakable Object Settings")]
     [SerializeField] private BreakableObject[] _breakableObject;
     [SerializeField] private ObjectSpawner _objectSpawner;
     [SerializeField] private Transform _breakableObjectTransform;
 
-    public float TimerCountDown => _timerCountDown;
     public int AmountOfTapsFromPlayer => _amountOfTapsFromPlayer;
     public int CurrentObjectInArray => _currentObjectInArray;
+    public bool StartGameAfterCountdown => _startGameAfterCountdown;
 
     public AudioClip[] Clip => _clip;
     public TouchManager Input => _input;
     public GameObject[] GamePlayUI => _gameUI;
-    public TextMeshProUGUI TimerText => _timerText;
 
     public BreakableObject[] BreakableObject => _breakableObject;
     public ObjectSpawner ObjectSpawner => _objectSpawner;
@@ -56,14 +58,23 @@ public class GameController : MonoBehaviour
     {
         _amountOfTapsFromPlayer = 0;
         _tapsToBreakObject.value = _amountOfTapsFromPlayer;
+
+        _startGameAfterCountdown = false;
+        _initialCountdown = 4f;
     }
 
     public void SetGameValues()
     {
         _timerCountDown = _breakableObject[_currentObjectInArray]._timeToBreakThisObject;
+        _timerText.text = string.Format("{0:N}", _timerCountDown);
 
+        // Slider
         _tapsToBreakObject.maxValue = _breakableObject[_currentObjectInArray]._tapsNeededToBreak;
         _tapsToBreakObject.minValue = 0;
+
+        // Initial timer countdown
+        _startGameAfterCountdown = false;
+        _initialCountdown = 4f;
     }
 
     public void IncreaseDifficulty()
@@ -74,6 +85,7 @@ public class GameController : MonoBehaviour
     public void CountDown()
     {
         _timerCountDown -= Time.deltaTime;
+
         if (_timerCountDown > 3)
         {
             _timerText.color = Color.white;
@@ -86,22 +98,31 @@ public class GameController : MonoBehaviour
         {
             _timerCountDown = 0;
         }
-
         float seconds = _timerCountDown % 60;
         _timerText.text = string.Format("{0:N}", seconds);
     }
-    /*
+    
     public void StartingCountdown()
     {
-        float threeTwoOneCountdown = 3f;
-        threeTwoOneCountdown -= Time.deltaTime;
-
-        if (threeTwoOneCountdown <= 0)
+        _initialCountdown -= Time.deltaTime;
+        if (_initialCountdown > 1)
         {
-            threeTwoOneCountdown = 0;
+            _startGameAfterCountdown = false;
+            _initialCountdownText.gameObject.SetActive(true);
+
+            int seconds = Mathf.FloorToInt(_initialCountdown % 60);
+            _initialCountdownText.text = string.Format("{0}", seconds);
+        }
+        else if (_initialCountdown > 0)
+        {
+            _initialCountdownText.text = "Begin!";
+        }
+        else if (_initialCountdown <= 0)
+        {
+            _startGameAfterCountdown = true;
+            _initialCountdown = 0;
+            _initialCountdownText.gameObject.SetActive(false);
         }
 
-        float seconds = threeTwoOneCountdown % 60;
-        threeTwoOneCountdown.text = string.Format("{0:N}", seconds);
-    }*/
+    }
 }
