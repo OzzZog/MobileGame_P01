@@ -28,6 +28,7 @@ public class GamePlayState : State
 
         _controller.ResetGameInfo();
         _controller.SetGameValues();
+        _controller.Input.AreWeInGamePlayState = true;
 
         _breakableObject = _controller.ObjectSpawner.Spawn(_controller.BreakableObject[_controller.CurrentObjectInArray], _controller.BreakableObjectTransform);
     }
@@ -37,12 +38,13 @@ public class GamePlayState : State
         base.Exit();
 
         _controller.ResetGameInfo();
-
         _controller.IncreaseDifficulty();
 
         _breakableObject.gameObject.SetActive(false);
 
         GamePlayUI.HideUI(_controller.GamePlayUI[1]);
+
+        _controller.Input.AreWeInGamePlayState = false;
     }
 
     public override void FixedTick()

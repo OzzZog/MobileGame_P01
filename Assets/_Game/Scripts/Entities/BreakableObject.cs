@@ -7,16 +7,28 @@ public class BreakableObject : MonoBehaviour
     [Header("Object Details")]
     [SerializeField] public int _tapsNeededToBreak;
     [SerializeField] public int _timeToBreakThisObject;
+    public AnimationCurve curve;
+    [SerializeField] ParticleSystem _particles;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Shake()
     {
-        
+        _particles.Play();
+        StartCoroutine(Shaking());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Shaking()
     {
-        
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.1f)
+        {
+            elapsedTime += Time.deltaTime;
+            float strength = curve.Evaluate(elapsedTime/0.1f);
+            transform.position = startPosition + Random.insideUnitSphere * strength;
+            yield return null;
+        }
+
+        transform.position = startPosition;
     }
 }

@@ -15,8 +15,6 @@ public class GameWinState : State
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("You Win!");
-
 
         // Play win audio, hide gameplay UI, show win UI
         AudioManager.PlayClip(_controller.Clip[1], 1);
@@ -28,7 +26,6 @@ public class GameWinState : State
         base.Exit();
 
         GamePlayUI.HideUI(_controller.GamePlayUI[3]);
-
     }
 
     public override void FixedTick()

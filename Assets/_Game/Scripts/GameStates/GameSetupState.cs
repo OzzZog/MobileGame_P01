@@ -20,6 +20,7 @@ public class GameSetupState : State
         base.Enter();
 
         GamePlayUI.ShowUI(_controller.GamePlayUI[0]);
+
     }
 
     public override void Exit()
@@ -42,7 +43,6 @@ public class GameSetupState : State
         if (StateDuration >= _controller.TapLimitDuration)
         {
             _stateMachine.ChangeState(_stateMachine.PlayState);
-        }
-        */
+        }*/
     }
 }

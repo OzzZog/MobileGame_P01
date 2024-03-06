@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     private float _timerCountDown;
     private int _amountOfTapsFromPlayer;
     private int _currentObjectInArray;
+    public Gradient gradient;
 
     [Header("Dependencies")]
     [SerializeField] private AudioClip[] _clip;
@@ -17,8 +18,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject[] _gameUI;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _tapsToBreakObject;
+    [SerializeField] private Image _sliderFill;
 
-    [Header("Breakable Objects")]
+    [Header("Breakable Object Settings")]
     [SerializeField] private BreakableObject[] _breakableObject;
     [SerializeField] private ObjectSpawner _objectSpawner;
     [SerializeField] private Transform _breakableObjectTransform;
@@ -41,6 +43,13 @@ public class GameController : MonoBehaviour
     {
         _amountOfTapsFromPlayer++;
         _tapsToBreakObject.value++;
+        _sliderFill.color = gradient.Evaluate(_tapsToBreakObject.normalizedValue);
+    }
+
+    public void ShakeObject()
+    {
+        BreakableObject shakeObject = FindObjectOfType<BreakableObject>();
+        shakeObject.Shake();
     }
 
     public void ResetGameInfo()
@@ -55,10 +64,6 @@ public class GameController : MonoBehaviour
 
         _tapsToBreakObject.maxValue = _breakableObject[_currentObjectInArray]._tapsNeededToBreak;
         _tapsToBreakObject.minValue = 0;
-
-        //Debug.Log(_currentObjectInArray);
-        //Debug.Log("Taps to break this object: " + _breakableObject[_currentObjectInArray]._tapsNeededToBreak);
-        //Debug.Log("Taps to break this object: " + _breakableObject[_currentObjectInArray]._timeToBreakThisObject);
     }
 
     public void IncreaseDifficulty()
@@ -80,11 +85,23 @@ public class GameController : MonoBehaviour
         else if (_timerCountDown <= 0)
         {
             _timerCountDown = 0;
-
-            //_timerText.color = Color.red;
         }
 
         float seconds = _timerCountDown % 60;
         _timerText.text = string.Format("{0:N}", seconds);
     }
+    /*
+    public void StartingCountdown()
+    {
+        float threeTwoOneCountdown = 3f;
+        threeTwoOneCountdown -= Time.deltaTime;
+
+        if (threeTwoOneCountdown <= 0)
+        {
+            threeTwoOneCountdown = 0;
+        }
+
+        float seconds = threeTwoOneCountdown % 60;
+        threeTwoOneCountdown.text = string.Format("{0:N}", seconds);
+    }*/
 }

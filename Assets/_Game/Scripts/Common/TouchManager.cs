@@ -12,6 +12,11 @@ public class TouchManager : MonoBehaviour
     private InputAction touchPressAction;
 
     public UnityEvent OnTap;
+    public UnityEvent TapDuringGameplay;
+
+    [SerializeField] ParticleSystem particle = null;
+
+    public bool AreWeInGamePlayState;
 
     public bool IsTapPressed { get; private set; }
 
@@ -29,13 +34,22 @@ public class TouchManager : MonoBehaviour
 
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPressed;
         IsTapPressed = false;
+
+        touchPressAction.performed -= TouchPressed;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
         IsTapPressed = true;
-        OnTap?.Invoke();
+
+        if (!AreWeInGamePlayState)
+        {
+            OnTap?.Invoke();
+        }
+        else
+        {
+            TapDuringGameplay?.Invoke();
+        }
     }
 }
