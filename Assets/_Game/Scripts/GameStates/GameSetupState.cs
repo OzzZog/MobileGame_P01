@@ -20,14 +20,12 @@ public class GameSetupState : State
         base.Enter();
 
         GamePlayUI.ShowUI(_controller.GamePlayUI[0]);
-
+        GamePlayUI.HideUI(_controller.GamePlayUI[1]);
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        GamePlayUI.HideUI(_controller.GamePlayUI[0]);
     }
 
     public override void FixedTick()

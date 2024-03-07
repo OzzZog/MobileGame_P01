@@ -24,10 +24,12 @@ public class GamePlayState : State
         base.Enter();
 
         GamePlayUI.ShowUI(_controller.GamePlayUI[1]);
-        AudioManager.PlayClip(_controller.Clip[0], 1);
+        GamePlayUI.HideUI(_controller.GamePlayUI[0]); 
+        GamePlayUI.HideUI(_controller.GamePlayUI[2]);
 
         _controller.ResetGameInfo();
         _controller.SetGameValues();
+        _controller._countDownAudioSource.Play();
 
         _breakableObject = _controller.ObjectSpawner.Spawn(_controller.BreakableObject[_controller.CurrentObjectInArray], _controller.BreakableObjectTransform);
     }
@@ -41,8 +43,6 @@ public class GamePlayState : State
 
         //Object.Destroy(_breakableObject);
         _breakableObject.gameObject.SetActive(false);
-
-        GamePlayUI.HideUI(_controller.GamePlayUI[1]);
 
         _controller.Input.AreWeInGamePlayState = false;
     }
@@ -64,7 +64,6 @@ public class GamePlayState : State
         else if (_controller.StartGameAfterCountdown)
         {
             _controller.Input.AreWeInGamePlayState = true;
-
             _controller.CountDown();
 
             if (_controller.AmountOfTapsFromPlayer == _controller.BreakableObject[4]._tapsNeededToBreak)

@@ -24,8 +24,6 @@ public class GameWinState : State
     public override void Exit()
     {
         base.Exit();
-
-        GamePlayUI.HideUI(_controller.GamePlayUI[3]);
     }
 
     public override void FixedTick()

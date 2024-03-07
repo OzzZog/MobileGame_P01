@@ -18,14 +18,13 @@ public class GameNextLevelState : State
         base.Enter();
 
         GamePlayUI.ShowUI(_controller.GamePlayUI[2]);
+        GamePlayUI.HideUI(_controller.GamePlayUI[1]);
         AudioManager.PlayClip(_controller.Clip[0], 1);
     }
 
     public override void Exit()
     {
         base.Exit();
-
-        GamePlayUI.HideUI(_controller.GamePlayUI[2]);
     }
 
     public override void FixedTick()

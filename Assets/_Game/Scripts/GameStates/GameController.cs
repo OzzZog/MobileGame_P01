@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _initialCountdown = 4f;
 
     [Header("Dependencies")]
+    [SerializeField] public AudioSource _countDownAudioSource;
     [SerializeField] private AudioClip[] _clip;
     [SerializeField] private TouchManager _input;
     [SerializeField] private GameObject[] _gameUI;
@@ -66,6 +67,7 @@ public class GameController : MonoBehaviour
     public void SetGameValues()
     {
         _timerCountDown = _breakableObject[_currentObjectInArray]._timeToBreakThisObject;
+        _timerText.color = Color.white;
         _timerText.text = string.Format("{0:N}", _timerCountDown);
 
         // Slider
@@ -108,8 +110,8 @@ public class GameController : MonoBehaviour
         if (_initialCountdown > 1)
         {
             _startGameAfterCountdown = false;
-            _initialCountdownText.gameObject.SetActive(true);
 
+            _initialCountdownText.gameObject.SetActive(true);
             int seconds = Mathf.FloorToInt(_initialCountdown % 60);
             _initialCountdownText.text = string.Format("{0}", seconds);
         }
@@ -123,6 +125,5 @@ public class GameController : MonoBehaviour
             _initialCountdown = 0;
             _initialCountdownText.gameObject.SetActive(false);
         }
-
     }
 }
